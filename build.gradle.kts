@@ -3,9 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 extra["springCloudVersion"] = "2023.0.1"
 extra["queryDslVersion"] = "5.0.0"
 
+val snippetsDir = file("./build/generated-snippets")
+
 plugins {
     id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
+    id("org.asciidoctor.jvm.convert") version "3.3.2"
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
@@ -40,6 +43,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.batch:spring-batch-test")
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     implementation("com.querydsl:querydsl-jpa:${property("queryDslVersion")}:jakarta")
     kapt("com.querydsl:querydsl-apt:${property("queryDslVersion")}:jakarta")
 
@@ -66,3 +70,35 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+// Ascii Doc Create Tasks
+tasks {
+    // Test 결과를 snippet Directory에 출력
+    test {
+        outputs.dir(snippetsDir)
+    }
+
+    asciidoctor {
+        // test 가 성공해야만, 아래 Task 실행
+        dependsOn(test)
+
+        // 기존에 존재하는 Docs 삭제(문서 최신화를 위해)
+        doFirst {
+            delete(file("src/main/resources/static/docs"))
+        }
+
+        inputs.dir(snippetsDir)
+
+        // Ascii Doc 파일 생성
+        doLast {
+            copy {
+                from("build/docs/asciidoc")
+                into("src/main/resources/static/docs")
+            }
+        }
+    }
+
+    build {
+        // Ascii Doc 파일 생성이 성공해야만, Build 진행
+        dependsOn(asciidoctor)
+    }
+}
