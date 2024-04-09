@@ -1,4 +1,4 @@
-package com.fitmate.batchservice.persistence.entity
+package com.fitmate.batchservice.scheduler
 
 import org.quartz.JobExecutionContext
 import org.springframework.batch.core.JobParametersBuilder

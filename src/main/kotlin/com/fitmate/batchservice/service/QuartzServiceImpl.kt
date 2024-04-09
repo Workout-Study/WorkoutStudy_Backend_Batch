@@ -5,8 +5,8 @@ import com.fitmate.batchservice.dto.quartz.*
 import com.fitmate.batchservice.exception.NotExpectResultException
 import com.fitmate.batchservice.exception.ResourceNotFoundException
 import com.fitmate.batchservice.persistence.entity.JobScheduler
-import com.fitmate.batchservice.persistence.entity.QuartzJob
 import com.fitmate.batchservice.persistence.repository.JobSchedulerRepository
+import com.fitmate.batchservice.scheduler.QuartzJob
 import com.fitmate.batchservice.scheduler.QuartzListener
 import jakarta.ws.rs.BadRequestException
 import org.quartz.*
