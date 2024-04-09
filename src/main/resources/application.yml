@@ -1,8 +1,7 @@
-server:
-  port: 8010
-  shutdown: graceful
-
 spring:
+  profiles:
+    active: local
+
   application:
     name: batch-service
   h2:
@@ -15,6 +14,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: false
 
   kafka:
     consumer:
@@ -30,6 +30,54 @@ spring:
   batch:
     job:
       enabled: false
+
+server:
+  port: 8010
+  shutdown: graceful
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: main
+  application:
+    name: fit-group-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/batch?validationQuery="select 1"
+    username: batch
+    password: batch
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    database: mysql
+    open-in-view: false
+
+  kafka:
+    consumer:
+      bootstrap-servers: kafka:9092
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: kafka:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+server:
+  port: 8010
+  shutdown: graceful
 
 eureka:
   instance:

@@ -1,5 +1,7 @@
 package com.fitmate.batchservice.persistence.entity
 
+import com.fitmate.batchservice.common.GlobalStatus
+import com.fitmate.batchservice.dto.fit.FitMateResponseDto
 import jakarta.persistence.*
 import lombok.EqualsAndHashCode
 import java.time.Instant
@@ -19,6 +21,17 @@ class FitMateForRead private constructor(
     var id: Long? = null
 
     companion object {
-
+        fun createByDetail(
+            fitGroupId: Long,
+            dto: FitMateResponseDto,
+            eventPublisher: String
+        ): FitMateForRead =
+            FitMateForRead(
+                fitGroupId,
+                dto.fitMateId,
+                dto.fitMateUserId,
+                GlobalStatus.PERSISTENCE_NOT_DELETED,
+                eventPublisher
+            )
     }
 }

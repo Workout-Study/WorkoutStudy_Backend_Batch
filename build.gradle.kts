@@ -48,9 +48,11 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:${property("queryDslVersion")}:jakarta")
 
     runtimeOnly("com.h2database:h2")
+    runtimeOnly("com.mysql:mysql-connector-j")
 
     implementation("org.springframework.kafka:spring-kafka")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
 }
 
 dependencyManagement {
