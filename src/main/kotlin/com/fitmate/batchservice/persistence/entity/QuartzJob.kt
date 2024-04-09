@@ -1,23 +1,27 @@
 package com.fitmate.batchservice.persistence.entity
 
-import com.fitmate.batchservice.common.GlobalStatus
-import jakarta.persistence.*
-import lombok.EqualsAndHashCode
-import java.time.Instant
+import org.quartz.JobExecutionContext
+import org.springframework.batch.core.JobParametersBuilder
+import org.springframework.batch.core.configuration.JobLocator
+import org.springframework.batch.core.launch.JobLauncher
+import org.springframework.scheduling.quartz.QuartzJobBean
 
-@Entity
-@EqualsAndHashCode
-class QuartzJob private constructor(
-    @Column(unique = true) val jobName: String,
-    var cron: String,
-    createUser: String
-) : BaseEntity(GlobalStatus.PERSISTENCE_NOT_DELETED, createdAt = Instant.now(), createUser) {
+class QuartzJob(
+    private val jobName: String,
+    private val jobLauncher: JobLauncher,
+    private val jobLocator: JobLocator
+) : QuartzJobBean() {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    override fun executeInternal(context: JobExecutionContext) {
+        try {
+            val job = jobLocator.getJob(jobName)
+            val params = JobParametersBuilder()
+                .addString("JobID", System.currentTimeMillis().toString())
+                .toJobParameters()
 
-    companion object {
-
+            jobLauncher.run(job, params)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
