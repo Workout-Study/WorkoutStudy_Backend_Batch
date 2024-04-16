@@ -18,6 +18,11 @@ class JobScheduler(
     state: Boolean = GlobalStatus.PERSISTENCE_NOT_DELETED,
     createUser: String
 ) : BaseEntity(state, createdAt = Instant.now(), createUser) {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
+
     fun updateByRegisterDto(registerQuartzRequestDto: RegisterQuartzRequestDto) {
         cron = registerQuartzRequestDto.cron
         state = GlobalStatus.PERSISTENCE_NOT_DELETED
@@ -32,8 +37,4 @@ class JobScheduler(
         updatedAt = Instant.now()
         updateUser = updateQuartzRequestDto.requestUserId
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
 }

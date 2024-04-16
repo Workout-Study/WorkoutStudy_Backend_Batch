@@ -12,5 +12,6 @@ class GlobalStatus {
         const val KAFKA_GROUP_ID = "batch-service"
         const val KAFKA_TOPIC_FIT_GROUP = "fit-group"
         const val KAFKA_TOPIC_FIT_MATE = "fit-mate"
+        const val KAFKA_TOPIC_FIT_CERTIFICATION = "fit-certification"
     }
 }
