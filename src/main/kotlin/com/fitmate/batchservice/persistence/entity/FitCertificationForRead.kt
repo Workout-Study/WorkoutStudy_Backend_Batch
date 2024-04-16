@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode
 import java.time.Instant
 
 @Entity
-@Table(indexes = [Index(columnList = "fitGroupId")])
+@Table(indexes = [Index(columnList = "fitCertificationId")])
 @EqualsAndHashCode
 class FitCertificationForRead private constructor(
     var fitCertificationId: Long,
