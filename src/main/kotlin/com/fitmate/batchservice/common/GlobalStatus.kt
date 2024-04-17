@@ -13,5 +13,6 @@ class GlobalStatus {
         const val KAFKA_TOPIC_FIT_GROUP = "fit-group"
         const val KAFKA_TOPIC_FIT_MATE = "fit-mate"
         const val KAFKA_TOPIC_FIT_CERTIFICATION = "fit-certification"
+        const val KAFKA_TOPIC_FIT_CERTIFICATION_RESULT = "fit-certification-result"
     }
 }

@@ -2,6 +2,7 @@ package com.fitmate.batchservice.job
 
 import com.fitmate.batchservice.persistence.entity.FitCertificationForRead
 import com.fitmate.batchservice.persistence.entity.FitCertificationResult
+import com.fitmate.batchservice.service.CertificationResultJobService
 import jakarta.persistence.EntityManagerFactory
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.Step
@@ -11,19 +12,17 @@ import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
 import org.springframework.batch.item.ItemProcessor
 import org.springframework.batch.item.ItemWriter
-import org.springframework.batch.item.database.JdbcCursorItemReader
-import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder
+import org.springframework.batch.item.database.JpaPagingItemReader
+import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.jdbc.core.BeanPropertyRowMapper
 import org.springframework.transaction.PlatformTransactionManager
-import javax.sql.DataSource
 
 @Configuration
 class CertificationResultJobConfig(
     private val transactionManager: PlatformTransactionManager,
     private val entityManagerFactory: EntityManagerFactory,
-    private val dataSource: DataSource
+    private val certificationResultJobService: CertificationResultJobService
 ) {
 
     companion object {
@@ -47,13 +46,19 @@ class CertificationResultJobConfig(
 
     @Bean
     @StepScope
-    fun itemReader(): JdbcCursorItemReader<FitCertificationForRead> {
-        return JdbcCursorItemReaderBuilder<FitCertificationForRead>()
+    fun itemReader(): JpaPagingItemReader<FitCertificationForRead> {
+        return JpaPagingItemReaderBuilder<FitCertificationForRead>()
             .name(JobNames.CERTIFICATION_RESULT_JOB.jobName.plus("_READER"))
-            .sql("SELECT * FROM fit_certification_for_read WHERE state = 0 AND certification_status = 'REQUESTED'")
-            .rowMapper(BeanPropertyRowMapper(FitCertificationForRead::class.java))
-            .fetchSize(CHUNK_SIZE)
-            .dataSource(dataSource)
+            .entityManagerFactory(entityManagerFactory)
+            .pageSize(CHUNK_SIZE)
+            .queryString(
+                "SELECT read FROM fit_certification_for_read AS read " +
+                        "LEFT JOIN fit_certification_result AS result " +
+                        "WHERE read.state = 0 " +
+                        "AND read.certification_status = 'REQUESTED' " +
+                        "AND result.id IS NULL" +
+                        "ORDER BY read.id DESC"
+            )
             .build()
     }
 
@@ -61,13 +66,15 @@ class CertificationResultJobConfig(
     @StepScope
     fun itemProcessor(): ItemProcessor<FitCertificationForRead, FitCertificationResult> {
         return ItemProcessor<FitCertificationForRead, FitCertificationResult> { item ->
-            FitCertificationResult(item.fitCertificationId, item.certificationStatus, item.state, "BATCH")
+            certificationResultJobService.getCertificationResult(item)
         }
     }
 
     @Bean
     @StepScope
     fun itemWriter(): ItemWriter<FitCertificationResult> {
-        return ItemWriter<FitCertificationResult> { }
+        return ItemWriter<FitCertificationResult> { result ->
+            certificationResultJobService.saveFitCertificationResult(result)
+        }
     }
 }
