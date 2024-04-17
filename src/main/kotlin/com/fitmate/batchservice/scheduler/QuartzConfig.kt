@@ -1,8 +1,5 @@
 package com.fitmate.batchservice.scheduler
 
-import com.fitmate.batchservice.service.QuartzService
-import org.springframework.batch.core.configuration.JobRegistry
-import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor
 import org.springframework.beans.factory.config.PropertiesFactoryBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -12,16 +9,7 @@ import java.io.IOException
 import java.util.*
 
 @Configuration
-class QuartzConfig(
-    private val quartzService: QuartzService
-) {
-
-    @Bean
-    fun jobRegistryBeanPostProcessor(jobRegistry: JobRegistry): JobRegistryBeanPostProcessor {
-        val jobRegistryBeanPostProcessor = JobRegistryBeanPostProcessor()
-        jobRegistryBeanPostProcessor.setJobRegistry(jobRegistry)
-        return jobRegistryBeanPostProcessor
-    }
+class QuartzConfig {
 
     @Bean
     @Throws(IOException::class)
@@ -40,7 +28,4 @@ class QuartzConfig(
 
         return propertiesFactoryBean.getObject()
     }
-
-    @Bean
-    fun quartzStarter(): QuartzStarter = QuartzStarter(quartzService)
 }

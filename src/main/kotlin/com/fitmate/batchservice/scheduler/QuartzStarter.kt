@@ -2,7 +2,9 @@ package com.fitmate.batchservice.scheduler
 
 import com.fitmate.batchservice.service.QuartzService
 import jakarta.annotation.PreDestroy
+import org.springframework.stereotype.Component
 
+@Component
 class QuartzStarter(private val quartzService: QuartzService) {
 
     init {
