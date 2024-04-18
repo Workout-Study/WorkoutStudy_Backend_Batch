@@ -13,9 +13,8 @@ class GlobalURI {
         const val PATH_VARIABLE_JOB_NAME_WITH_BRACE = "/{$PATH_VARIABLE_JOB_NAME}"
 
         const val FIT_CERTIFICATION_RESULT_ROOT = "$ROOT_URI/certifications/results"
-        
+
         const val PATH_VARIABLE_FIT_CERTIFICATION_ID = "fit-certification-id"
         const val PATH_VARIABLE_FIT_CERTIFICATION_ID_WITH_BRACE = "/{$PATH_VARIABLE_FIT_CERTIFICATION_ID}"
-
     }
 }
