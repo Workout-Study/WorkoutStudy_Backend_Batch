@@ -39,14 +39,14 @@ class FitPenaltyIssueJobConfig(
     fun fitPenaltyFirstStep(jobRepository: JobRepository): Step =
         StepBuilder(JobNames.FIT_PENALTY_ISSUE_JOB.jobName + "FirstStep", jobRepository)
             .chunk<FitMateForRead, FitPenalty>(CHUNK_SIZE, transactionManager)
-            .reader(itemReader())
-            .processor(itemProcessor())
-            .writer(itemWriter())
+            .reader(fitPenaltyItemReader())
+            .processor(fitPenaltyItemProcessor())
+            .writer(fitPenaltyItemWriter())
             .build()
 
     @Bean
     @StepScope
-    fun itemReader(): JpaPagingItemReader<FitMateForRead> {
+    fun fitPenaltyItemReader(): JpaPagingItemReader<FitMateForRead> {
         return JpaPagingItemReaderBuilder<FitMateForRead>()
             .name(JobNames.FIT_PENALTY_ISSUE_JOB.jobName.plus("_READER"))
             .entityManagerFactory(entityManagerFactory)
@@ -65,7 +65,7 @@ class FitPenaltyIssueJobConfig(
 
     @Bean
     @StepScope
-    fun itemProcessor(): ItemProcessor<FitMateForRead, FitPenalty?> {
+    fun fitPenaltyItemProcessor(): ItemProcessor<FitMateForRead, FitPenalty?> {
         return ItemProcessor<FitMateForRead, FitPenalty?> { item ->
             fitPenaltyJobService.checkCertificationAndIssueFitPenalty(item)
         }
@@ -73,7 +73,7 @@ class FitPenaltyIssueJobConfig(
 
     @Bean
     @StepScope
-    fun itemWriter(): ItemWriter<FitPenalty> {
+    fun fitPenaltyItemWriter(): ItemWriter<FitPenalty> {
         return ItemWriter<FitPenalty> { result ->
             result.forEach {
                 fitPenaltyJobService.saveFitPenalty(it)

@@ -39,14 +39,14 @@ class CertificationResultJobConfig(
     fun certificationFirstStep(jobRepository: JobRepository): Step =
         StepBuilder(JobNames.CERTIFICATION_RESULT_JOB.jobName + "FirstStep", jobRepository)
             .chunk<FitCertificationForRead, FitCertificationResult>(CHUNK_SIZE, transactionManager)
-            .reader(itemReader())
-            .processor(itemProcessor())
-            .writer(itemWriter())
+            .reader(fitCertificationItemReader())
+            .processor(fitCertificationItemProcessor())
+            .writer(fitCertificationItemWriter())
             .build()
 
     @Bean
     @StepScope
-    fun itemReader(): JpaPagingItemReader<FitCertificationForRead> {
+    fun fitCertificationItemReader(): JpaPagingItemReader<FitCertificationForRead> {
         return JpaPagingItemReaderBuilder<FitCertificationForRead>()
             .name(JobNames.CERTIFICATION_RESULT_JOB.jobName.plus("_READER"))
             .entityManagerFactory(entityManagerFactory)
@@ -64,7 +64,7 @@ class CertificationResultJobConfig(
 
     @Bean
     @StepScope
-    fun itemProcessor(): ItemProcessor<FitCertificationForRead, FitCertificationResult> {
+    fun fitCertificationItemProcessor(): ItemProcessor<FitCertificationForRead, FitCertificationResult> {
         return ItemProcessor<FitCertificationForRead, FitCertificationResult> { item ->
             certificationResultJobService.getCertificationResult(item)
         }
@@ -72,7 +72,7 @@ class CertificationResultJobConfig(
 
     @Bean
     @StepScope
-    fun itemWriter(): ItemWriter<FitCertificationResult> {
+    fun fitCertificationItemWriter(): ItemWriter<FitCertificationResult> {
         return ItemWriter<FitCertificationResult> { result ->
             result.forEach {
                 certificationResultJobService.saveFitCertificationResult(it)
