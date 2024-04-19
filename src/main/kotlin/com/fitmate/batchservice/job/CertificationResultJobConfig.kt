@@ -74,7 +74,9 @@ class CertificationResultJobConfig(
     @StepScope
     fun itemWriter(): ItemWriter<FitCertificationResult> {
         return ItemWriter<FitCertificationResult> { result ->
-            certificationResultJobService.saveFitCertificationResult(result)
+            result.forEach {
+                certificationResultJobService.saveFitCertificationResult(it)
+            }
         }
     }
 }

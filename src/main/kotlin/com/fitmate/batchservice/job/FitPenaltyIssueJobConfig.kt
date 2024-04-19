@@ -11,9 +11,8 @@ import org.springframework.batch.core.job.builder.JobBuilder
 import org.springframework.batch.core.repository.JobRepository
 import org.springframework.batch.core.step.builder.StepBuilder
 import org.springframework.batch.item.ItemProcessor
-import org.springframework.batch.item.database.JpaItemWriter
+import org.springframework.batch.item.ItemWriter
 import org.springframework.batch.item.database.JpaPagingItemReader
-import org.springframework.batch.item.database.builder.JpaItemWriterBuilder
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -74,10 +73,11 @@ class FitPenaltyIssueJobConfig(
 
     @Bean
     @StepScope
-    fun itemWriter(): JpaItemWriter<FitPenalty> {
-        return JpaItemWriterBuilder<FitPenalty>()
-            .usePersist(true)
-            .entityManagerFactory(entityManagerFactory)
-            .build()
+    fun itemWriter(): ItemWriter<FitPenalty> {
+        return ItemWriter<FitPenalty> { result ->
+            result.forEach {
+                fitPenaltyJobService.saveFitPenalty(it)
+            }
+        }
     }
 }

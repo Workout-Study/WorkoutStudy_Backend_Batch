@@ -16,5 +16,10 @@ class GlobalURI {
 
         const val PATH_VARIABLE_FIT_CERTIFICATION_ID = "fit-certification-id"
         const val PATH_VARIABLE_FIT_CERTIFICATION_ID_WITH_BRACE = "/{$PATH_VARIABLE_FIT_CERTIFICATION_ID}"
+
+        const val FIT_PENALTY_ROOT = "$ROOT_URI/penalties"
+
+        const val PATH_VARIABLE_FIT_PENALTY_ID = "fit-penalty-id"
+        const val PATH_VARIABLE_FIT_PENALTY_ID_WITH_BRACE = "/{$PATH_VARIABLE_FIT_PENALTY_ID}"
     }
 }

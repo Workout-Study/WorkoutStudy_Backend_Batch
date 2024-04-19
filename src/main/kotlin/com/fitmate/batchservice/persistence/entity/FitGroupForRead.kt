@@ -12,6 +12,7 @@ class FitGroupForRead private constructor(
     var fitGroupName: String,
     var cycle: Int,
     var frequency: Int,
+    var penaltyAmount: Int,
     state: Boolean,
     createUser: String
 ) : BaseEntity(state, createdAt = Instant.now(), createUser) {
@@ -24,6 +25,7 @@ class FitGroupForRead private constructor(
         this.fitGroupName = dto.fitGroupName
         this.cycle = dto.cycle
         this.frequency = dto.frequency
+        this.penaltyAmount = dto.penaltyAmount
         this.state = dto.state
         this.updatedAt = Instant.now()
         this.updateUser = eventPublisher
@@ -39,6 +41,7 @@ class FitGroupForRead private constructor(
                 fitGroupDetail.fitGroupName,
                 fitGroupDetail.cycle,
                 fitGroupDetail.frequency,
+                fitGroupDetail.penaltyAmount,
                 fitGroupDetail.state,
                 eventPublisher
             )

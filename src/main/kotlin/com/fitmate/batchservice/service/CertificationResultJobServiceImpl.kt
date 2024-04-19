@@ -10,7 +10,6 @@ import com.fitmate.batchservice.persistence.entity.FitCertificationForRead
 import com.fitmate.batchservice.persistence.entity.FitCertificationResult
 import com.fitmate.batchservice.persistence.repository.FitCertificationResultRepository
 import com.fitmate.batchservice.utils.SenderUtils
-import org.springframework.batch.item.Chunk
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpMethod
@@ -46,6 +45,8 @@ class CertificationResultJobServiceImpl(
 
         return FitCertificationResult(
             fitCertificationProgress.fitCertificationId,
+            fitCertificationForRead.fitGroupId,
+            fitCertificationForRead.userId,
             fitCertificationStatusResult,
             GlobalStatus.PERSISTENCE_NOT_DELETED,
             "BATCH"
@@ -53,10 +54,8 @@ class CertificationResultJobServiceImpl(
     }
 
     @Transactional
-    override fun saveFitCertificationResult(result: Chunk<out FitCertificationResult>) {
-        result.forEach {
-            fitCertificationResultRepository.save(it)
-            eventPublisher.publishEvent(RegisterFitCertificationResultEvent(it.fitCertificationId))
-        }
+    override fun saveFitCertificationResult(result: FitCertificationResult) {
+        fitCertificationResultRepository.save(result)
+        eventPublisher.publishEvent(RegisterFitCertificationResultEvent(result.fitCertificationId))
     }
 }

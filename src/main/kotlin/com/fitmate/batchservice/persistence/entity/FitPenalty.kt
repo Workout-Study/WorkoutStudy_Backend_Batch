@@ -10,6 +10,7 @@ import java.time.Instant
 @EqualsAndHashCode
 class FitPenalty(
     val userId: String,
+    val fitGroupId: Long,
     val amount: Int,
     @Convert(converter = BooleanNumberConverter::class)
     var isConsumed: Boolean,

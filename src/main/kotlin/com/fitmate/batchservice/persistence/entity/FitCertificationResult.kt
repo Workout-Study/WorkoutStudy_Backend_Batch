@@ -9,6 +9,8 @@ import java.time.Instant
 @EqualsAndHashCode
 class FitCertificationResult(
     var fitCertificationId: Long,
+    var fitGroupId: Long,
+    var userId: String,
     @Enumerated(EnumType.STRING)
     var certificationStatus: CertificationStatus,
     state: Boolean,

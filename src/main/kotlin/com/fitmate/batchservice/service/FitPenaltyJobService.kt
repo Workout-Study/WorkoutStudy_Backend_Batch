@@ -5,4 +5,5 @@ import com.fitmate.batchservice.persistence.entity.FitPenalty
 
 interface FitPenaltyJobService {
     fun checkCertificationAndIssueFitPenalty(fitMateForRead: FitMateForRead): FitPenalty?
+    fun saveFitPenalty(fitPenalty: FitPenalty)
 }

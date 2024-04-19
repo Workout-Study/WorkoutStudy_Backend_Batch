@@ -10,6 +10,8 @@ import java.time.Instant
 @EqualsAndHashCode
 class FitCertificationForRead private constructor(
     var fitCertificationId: Long,
+    var fitGroupId: Long,
+    var userId: String,
     var certificationEndDate: Instant,
     @Enumerated(EnumType.STRING)
     var certificationStatus: CertificationStatus,
@@ -28,6 +30,8 @@ class FitCertificationForRead private constructor(
         this.fitCertificationId = fitCertificationDetail.fitCertificationId
         this.certificationEndDate = fitCertificationDetail.voteEndDate
         this.certificationStatus = fitCertificationDetail.certificationStatus
+        this.fitGroupId = fitCertificationDetail.fitGroupId
+        this.userId = fitCertificationDetail.userId
         this.state = fitCertificationDetail.state
         this.updatedAt = Instant.now()
         this.updateUser = eventPublisher
@@ -40,6 +44,8 @@ class FitCertificationForRead private constructor(
         ): FitCertificationForRead =
             FitCertificationForRead(
                 fitCertificationDetail.fitCertificationId,
+                fitCertificationDetail.fitGroupId,
+                fitCertificationDetail.userId,
                 fitCertificationDetail.voteEndDate,
                 fitCertificationDetail.certificationStatus,
                 fitCertificationDetail.state,

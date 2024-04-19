@@ -8,5 +8,6 @@ data class FitGroupResponseDto(
     val fitGroupName: String,
     val cycle: Int,
     val frequency: Int,
+    val penaltyAmount: Int,
     val state: Boolean
 )
