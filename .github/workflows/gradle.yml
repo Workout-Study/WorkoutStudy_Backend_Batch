@@ -50,6 +50,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: 22
           script: |
+            ${{ secrets.SERVER_PASSWORD }}
             docker stop fit-mate-batch
             docker rm fit-mate-batch
             docker pull ${{secrets.DOCKER_USERNAME}}/fit-mate-batch:latest
