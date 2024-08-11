@@ -11,7 +11,7 @@ import java.time.Instant
 class FitCertificationForRead private constructor(
     var fitCertificationId: Long,
     var fitGroupId: Long,
-    var userId: String,
+    var userId: Int,
     var certificationEndDate: Instant,
     @Enumerated(EnumType.STRING)
     var certificationStatus: CertificationStatus,

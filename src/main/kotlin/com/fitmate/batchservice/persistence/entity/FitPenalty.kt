@@ -9,7 +9,7 @@ import java.time.Instant
 @Entity
 @EqualsAndHashCode
 class FitPenalty(
-    val userId: String,
+    val userId: Int,
     val fitGroupId: Long,
     val amount: Int,
     @Convert(converter = BooleanNumberConverter::class)

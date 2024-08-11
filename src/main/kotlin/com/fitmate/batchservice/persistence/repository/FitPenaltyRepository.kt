@@ -8,7 +8,7 @@ import java.util.*
 interface FitPenaltyRepository : JpaRepository<FitPenalty, Long> {
     fun findByFitGroupIdAndUserIdAndCreatedAtGreaterThanEqualAndCreatedAtLessThanEqual(
         fitGroupId: Long,
-        userId: String,
+        userId: Int,
         startDate: Instant,
         endDate: Instant
     ): Optional<FitPenalty>

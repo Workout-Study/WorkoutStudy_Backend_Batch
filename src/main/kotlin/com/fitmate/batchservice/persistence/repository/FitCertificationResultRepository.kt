@@ -26,7 +26,7 @@ interface FitCertificationResultRepository : JpaRepository<FitCertificationResul
     )
     fun findLastWeekCertificationsByUserAndFitGroupAndStatus(
         @Param("fitGroupId") fitGroupId: Long,
-        @Param("userId") userId: String,
+        @Param("userId") userId: Int,
         @Param("startDate") startDate: Instant,
         @Param("endDate") endDate: Instant,
         @Param("certificationStatus") certificationStatus: CertificationStatus

@@ -10,7 +10,7 @@ import java.time.Instant
 class FitCertificationResult(
     var fitCertificationId: Long,
     var fitGroupId: Long,
-    var userId: String,
+    var userId: Int,
     @Enumerated(EnumType.STRING)
     var certificationStatus: CertificationStatus,
     state: Boolean,
