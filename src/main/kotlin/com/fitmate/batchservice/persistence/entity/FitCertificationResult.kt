@@ -4,7 +4,7 @@ import jakarta.persistence.*
 import lombok.EqualsAndHashCode
 import java.time.Instant
 
-@Entity
+@Entity(name = "fit_certification_result")
 @Table(indexes = [Index(columnList = "fitCertificationId")])
 @EqualsAndHashCode
 class FitCertificationResult(

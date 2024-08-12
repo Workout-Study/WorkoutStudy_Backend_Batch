@@ -17,7 +17,7 @@ interface FitCertificationResultRepository : JpaRepository<FitCertificationResul
 
     @Query(
         "SELECT result " +
-                "FROM FitCertificationResult AS result " +
+                "FROM fit_certification_result AS result " +
                 "WHERE result.fitGroupId = :fitGroupId " +
                 "AND result.userId = :userId " +
                 "AND result.createdAt >= :startDate " +

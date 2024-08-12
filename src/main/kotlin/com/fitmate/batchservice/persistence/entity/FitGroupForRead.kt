@@ -5,7 +5,7 @@ import jakarta.persistence.*
 import lombok.EqualsAndHashCode
 import java.time.Instant
 
-@Entity
+@Entity(name = "fit_group_for_read")
 @EqualsAndHashCode
 class FitGroupForRead private constructor(
     @Column(unique = true) val fitGroupId: Long,
