@@ -1,5 +1,6 @@
 package com.fitmate.batchservice.scheduler
 
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory
 import org.springframework.beans.factory.config.PropertiesFactoryBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -9,13 +10,21 @@ import java.io.IOException
 import java.util.*
 
 @Configuration
-class QuartzConfig {
+class QuartzConfig(
+    private val beanFactory: AutowireCapableBeanFactory
+) {
+
+    @Bean
+    fun jobFactory(): AutowiringSpringBeanJobFactory {
+        return AutowiringSpringBeanJobFactory(beanFactory)
+    }
 
     @Bean
     @Throws(IOException::class)
-    fun schedulerFactoryBean(): SchedulerFactoryBean {
+    fun schedulerFactoryBean(jobFactory: AutowiringSpringBeanJobFactory): SchedulerFactoryBean {
         val scheduler = SchedulerFactoryBean()
         scheduler.setQuartzProperties(quartzProperties()!!)
+        scheduler.setJobFactory(jobFactory)
         return scheduler
     }
 

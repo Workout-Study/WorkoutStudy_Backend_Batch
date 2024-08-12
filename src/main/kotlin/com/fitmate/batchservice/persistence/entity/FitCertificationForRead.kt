@@ -5,13 +5,13 @@ import jakarta.persistence.*
 import lombok.EqualsAndHashCode
 import java.time.Instant
 
-@Entity
+@Entity(name = "fit_certification_for_read")
 @Table(indexes = [Index(columnList = "fitCertificationId")])
 @EqualsAndHashCode
 class FitCertificationForRead private constructor(
     var fitCertificationId: Long,
     var fitGroupId: Long,
-    var userId: String,
+    var userId: Int,
     var certificationEndDate: Instant,
     @Enumerated(EnumType.STRING)
     var certificationStatus: CertificationStatus,

@@ -54,9 +54,10 @@ class CertificationResultJobConfig(
             .queryString(
                 "SELECT read FROM fit_certification_for_read AS read " +
                         "LEFT JOIN fit_certification_result AS result " +
-                        "WHERE read.state = 0 " +
-                        "AND read.certification_status = 'REQUESTED' " +
-                        "AND result.id IS NULL" +
+                        "ON read.fitCertificationId = result.fitCertificationId " +
+                        "WHERE read.state = false " +
+                        "AND read.certificationStatus = 'REQUESTED' " +
+                        "AND result.id IS NULL " +
                         "ORDER BY read.id DESC"
             )
             .build()

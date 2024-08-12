@@ -53,12 +53,12 @@ class FitPenaltyIssueJobConfig(
             .pageSize(CHUNK_SIZE)
             .queryString(
                 "SELECT mate FROM fit_mate_for_read AS mate " +
-                        "LEFT JOIN fit_group_for_read AS group" +
-                        "ON mate.fit_group_id = group.fit_group_id" +
-                        "AND group.state = 0" +
-                        "WHERE mate.state = 0 " +
-                        "AND group.state IS NOT NULL" +
-                        "ORDER BY mate.fit_mate_id DESC"
+                        "LEFT JOIN fit_group_for_read AS group " +
+                        "ON mate.fitGroupId = group.fitGroupId " +
+                        "AND group.state = false " +
+                        "WHERE mate.state = false " +
+                        "AND group.state IS NOT NULL " +
+                        "ORDER BY mate.fitMateId DESC"
             )
             .build()
     }
