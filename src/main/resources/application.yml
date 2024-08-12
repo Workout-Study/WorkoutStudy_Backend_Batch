@@ -30,6 +30,9 @@ spring:
   batch:
     job:
       enabled: false
+    jdbc:
+      initialize-schema: always
+
 
 server:
   port: 8010
@@ -65,6 +68,12 @@ spring:
       bootstrap-servers: kafka-1:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
 
 server:
   port: 8010

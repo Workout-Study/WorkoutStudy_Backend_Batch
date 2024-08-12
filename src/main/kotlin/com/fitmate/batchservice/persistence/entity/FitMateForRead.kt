@@ -6,7 +6,7 @@ import jakarta.persistence.*
 import lombok.EqualsAndHashCode
 import java.time.Instant
 
-@Entity
+@Entity(name = "fit_mate_for_read")
 @EqualsAndHashCode
 class FitMateForRead private constructor(
     val fitGroupId: Long,

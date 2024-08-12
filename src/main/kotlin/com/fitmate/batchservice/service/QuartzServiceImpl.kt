@@ -2,13 +2,13 @@ package com.fitmate.batchservice.service
 
 import com.fitmate.batchservice.common.GlobalStatus
 import com.fitmate.batchservice.dto.quartz.*
+import com.fitmate.batchservice.exception.BadRequestException
 import com.fitmate.batchservice.exception.NotExpectResultException
 import com.fitmate.batchservice.exception.ResourceNotFoundException
 import com.fitmate.batchservice.persistence.entity.JobScheduler
 import com.fitmate.batchservice.persistence.repository.JobSchedulerRepository
 import com.fitmate.batchservice.scheduler.QuartzJob
 import com.fitmate.batchservice.scheduler.QuartzListener
-import jakarta.ws.rs.BadRequestException
 import org.quartz.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
