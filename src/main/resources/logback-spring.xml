@@ -6,7 +6,7 @@
         </http>
         <format>
             <label>
-                <pattern>app="fit-mate-batch",host=${HOSTNAME},level=%level</pattern>
+                <pattern>app=fit-mate-batch,host=${HOSTNAME},level=%level</pattern>
                 <readMarkers>true</readMarkers>
             </label>
             <message>
