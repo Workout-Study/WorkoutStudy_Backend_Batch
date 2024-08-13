@@ -28,7 +28,7 @@ class FitCertificationForRead private constructor(
         eventPublisher: String
     ) {
         this.fitCertificationId = fitCertificationDetail.fitCertificationId
-        this.certificationEndDate = fitCertificationDetail.voteEndDate
+        this.certificationEndDate = fitCertificationDetail.voteEndDateInstant
         this.certificationStatus = fitCertificationDetail.certificationStatus
         this.fitGroupId = fitCertificationDetail.fitGroupId
         this.userId = fitCertificationDetail.userId
@@ -46,7 +46,7 @@ class FitCertificationForRead private constructor(
                 fitCertificationDetail.fitCertificationId,
                 fitCertificationDetail.fitGroupId,
                 fitCertificationDetail.userId,
-                fitCertificationDetail.voteEndDate,
+                fitCertificationDetail.voteEndDateInstant,
                 fitCertificationDetail.certificationStatus,
                 fitCertificationDetail.state,
                 eventPublisher
