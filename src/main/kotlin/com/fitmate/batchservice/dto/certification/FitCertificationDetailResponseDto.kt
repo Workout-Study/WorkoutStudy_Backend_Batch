@@ -1,6 +1,7 @@
 package com.fitmate.batchservice.dto.certification
 
 import com.fitmate.batchservice.persistence.entity.CertificationStatus
+import com.fitmate.batchservice.utils.DateParseUtils
 import java.time.Instant
 
 data class FitCertificationDetailResponseDto(
@@ -9,6 +10,8 @@ data class FitCertificationDetailResponseDto(
     val userId: Int,
     val certificationStatus: CertificationStatus,
     val state: Boolean,
-    val createdAt: Instant,
-    val voteEndDate: Instant
-)
+    val createdAt: String,
+    val voteEndDate: String
+) {
+    val voteEndDateInstant: Instant = DateParseUtils.stringToInstant(voteEndDate)
+}
