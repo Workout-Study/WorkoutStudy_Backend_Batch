@@ -57,6 +57,7 @@ class CertificationResultJobConfig(
                         "ON read.fitCertificationId = result.fitCertificationId " +
                         "WHERE read.state = false " +
                         "AND read.certificationStatus = 'REQUESTED' " +
+                        "AND read.certificationEndDate < now() " +
                         "AND result.id IS NULL " +
                         "ORDER BY read.id DESC"
             )
