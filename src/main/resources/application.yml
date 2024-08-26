@@ -48,7 +48,7 @@ spring:
     name: fit-group-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql-container:3306/batch?validationQuery="select 1"
+    url: jdbc:mysql://223.130.156.217:3306/batch?validationQuery="select 1"
     username: batch
     password: batch
   jpa:
